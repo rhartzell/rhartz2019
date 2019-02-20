@@ -14,7 +14,8 @@
     <script src="js/WebGL.js"></script>
     <script>
       // Global vars...
-      var container, camera, scene, geometry, mesh, renderer, controls, particles, colors;
+      var container, camera, scene, geometry, mesh, renderer, controls, particles, colors,
+      particles1, particles2, particles3, particles4;
 
       // DOM element...
       container = document.createElement('div');
@@ -22,7 +23,7 @@
 
       // Camera...
       camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-      camera.position.set(25, 10, 100);
+      camera.position.set(25, 10, 150);
 
       // Scene...
       scene = new THREE.Scene();
@@ -45,9 +46,10 @@
       var circles = 8;
       var divisions = 64;
 
+/*
       var helper = new THREE.PolarGridHelper( radius, radials, circles, divisions );
       scene.add( helper );
-
+*/
      var gridXZ = new THREE.GridHelper(100, 10, 'black', 'skyblue');
       gridXZ.position.set(0, 0, 0);
       scene.add(gridXZ);
@@ -117,17 +119,26 @@
 
       particles4 = new THREE.Points(geometry4, mesh4);
       scene.add(particles4);
-
+/*
       var geometry = new THREE.SphereGeometry( 1, 32, 32 );
       var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
       var sphere = new THREE.Mesh( geometry, material );
       scene.add( sphere );
-
+*/
       animate();
 
       function animate() {
           requestAnimationFrame(animate);
-          //particles.rotation.y += 0.01;
+          particles1.rotation.y += 0.01;
+          particles2.rotation.y += 0.01;
+          particles3.rotation.y += 0.01;
+          particles4.rotation.y += 0.01;
+          
+          particles1.rotation.x += 0.01;
+          particles2.rotation.x += 0.01;
+          particles3.rotation.x += 0.01;
+          particles4.rotation.x += 0.01;
+          
           renderer.render(scene, camera);
           controls.update();
       }

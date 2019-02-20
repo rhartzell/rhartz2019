@@ -22,7 +22,7 @@
 
       // Camera...
       camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-      camera.position.set(-45, 25, 100);
+      camera.position.set(-45, 25, 150);
 
       // Scene...
       scene = new THREE.Scene();
@@ -39,17 +39,17 @@
       // Controls...
       controls = new THREE.OrbitControls(camera);
 
-      // Make grid...
-      var gridXZ = new THREE.GridHelper(100, 10, 'black', 'skyblue');
+      // Make grids for each axis...
+      var gridXZ = new THREE.GridHelper(100, 10, 'black', 'red');
       gridXZ.position.set(0, 0, 0);
       scene.add(gridXZ);
 
-      var gridXY = new THREE.GridHelper(100,10, 'black', 'skyblue');
+      var gridXY = new THREE.GridHelper(100,10, 'black', 'red');
       gridXY.position.set(0, 0, 0);
       gridXY.rotation.x = Math.PI / 2;
       scene.add(gridXY);
 
-      var gridYZ = new THREE.GridHelper(100,10, 'black', 'skyblue');
+      var gridYZ = new THREE.GridHelper(100,10, 'black', 'red');
       gridYZ.position.set(0, 0, 0);
       gridYZ.rotation.z = Math.PI / 2;
       scene.add(gridYZ);
@@ -61,22 +61,20 @@
       var positions = planeGeom.attributes.position;
       for (var i = 0; i < positions.count; i++) {
         v.fromBufferAttribute(positions, i);
+        // y = f(x,z) -> hyperbolic paraboloid
         positions.setY(i, ((v.x * v.x)-(v.z * v.z)) * 0.25);
       }
       planeGeom.center();
       planeGeom.computeVertexNormals();
 
-      var ellipticParaboloidSurface = new THREE.Mesh(planeGeom, new THREE.MeshNormalMaterial({
-        side: THREE.DoubleSide
-      }));
+      var ellipticParaboloidSurface = new THREE.Mesh(planeGeom, new THREE.MeshNormalMaterial({ side: THREE.DoubleSide }));
       scene.add(ellipticParaboloidSurface);
-
 
       animate();
 
       function animate() {
           requestAnimationFrame(animate);
-          //particles.rotation.y += 0.01;
+          ellipticParaboloidSurface.rotation.y += 0.01;
           renderer.render(scene, camera);
           controls.update();
       }

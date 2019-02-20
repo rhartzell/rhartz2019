@@ -52,7 +52,7 @@
             var grid = new THREE.GridHelper(100, 10);
             scene.add(grid);
             
-            camera.position.z = 5;
+            camera.position.set( 0, 5, 15 );
 
             controls = new THREE.OrbitControls( camera, renderer.domElement );
             controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
