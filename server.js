@@ -15,7 +15,12 @@ http.createServer(function (req, res) {
       });
       return res.end();
     }  
-    res.writeHead(200, {'Content-Type': 'text/html'});
+    if(filename.indexOf('.css') > 0) {
+      res.writeHead(200, {'Content-Type': 'text/css'});
+    } else {
+      res.writeHead(200, {'Content-Type': 'text/html'});      
+    }
+
     res.write(data);
     return res.end();
   });
